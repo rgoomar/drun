@@ -21,6 +21,7 @@ The primary purpose for this tool is to help create a consistent development exp
 1. Download binary from [releases](https://github.com/rgoomar/drun/releases/)
 1. Move the binary to `/usr/local/bin/drun`
     - `mv drun-[arch] /usr/loca/bin/drun`
+    - `chmod +x /usr/local/bin/drun`
 
 ### Building with Go
 
