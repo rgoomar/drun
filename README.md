@@ -12,6 +12,7 @@ The primary purpose for this tool is to help create a consistent development exp
 
 * Currently this will mount the directory you are executing from to `/app` on the container
     * This is useful for building projects locally
+* This is my first Go project, so there's room for improvement
 
 ## Installation
 
