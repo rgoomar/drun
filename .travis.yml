@@ -1,0 +1,15 @@
+language: go
+go:
+- 1.8.x
+install:
+- go get ./...
+- make release
+deploy:
+  provider: releases
+  api_key:
+    secure: bJPZhN5BObLypuD1O9xLzEWs1F2xhUiRSZ2tWXLlx191KxQAAPe/ULyaIp+NFCxAtGqInukEPqKEOj6056HevIq3/v2Bg4F+rv8hqhmrNt/vxJNww8wvXV0/FRVcQowRWyFd1UMTZ/29QnzAK6DcDMUofyhs8uc9e/TEFQVlPcUQP3NCAy4+lArvtaNO+wcfAeNh84pGZZO1aBEbgGKDMZf6Yh05lsXJmYuG+Qe+nkhqRP/zwV314rSvRzvWIr+vK398BrJakizMYCcRE1LL8xNfmneIXxySLT5KgQMCBJ9Ig7sELb82kIJNcKIqHgp9lXghR2K1fMvzLQP9THNrCpQ5eP07s14/grPFqPD9ckYYvbMVZUop9GlX7tOHvdKqn46GgLh+vwdd36qgo5UEy3CnxoGXid5JmmW2k0TlbbPV8N+QuD/iu2z5ZFotS3s0vB4k8+LRB1aSc7Q3nHM136JdRtq01Mf9M+B1pFICG4BBUdl0vF/ZziNqT8DqU2NiVnJrj7U5XUXXtDIzPk/uIvRG3wbuIM8C5Tss0J01F2pZEZR4M0OBKuSoEufMKMkwVVjFS/hYVkIasAAQSVOiS7xxyoFqZ98p6W++iuevHnze3wv0sCndOe6JxzuJxrNf2+aR0fUEGf6M62MBqbwou3n3b91/De2TUHXLhWJqq3k=
+  file: release/*
+  skip_cleanup: true
+  on:
+    repo: rgoomar/drun
+    tags: true
