@@ -46,11 +46,18 @@ You can add a `drun.json` file in the root of your project or wherever you going
 
 `net` - Network Mode for docker run. Defaults to `host` for running local servers.
 
+`ports` - Ports you want to expose, defaults to all ports on container
+
 *Example*
 ```json
 {
     "image": "openjdk:8",
-    "defaultCommand": "./gradlew build"
+    "defaultCommand": "./gradlew build",
+    "net": "host",
+    "ports": {
+        "8080":"8080",
+        "5000":"5000"
+    }
 }
 ```
 

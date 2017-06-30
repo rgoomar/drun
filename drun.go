@@ -13,24 +13,25 @@ import (
 
 // JSON Configuration Options
 type DrunConfig struct {
-	Image          string `json:"image"`
-	DefaultCommand string `json:"defaultCommand"`
-	Net            string `json:"net"`
+	Image          string            `json:"image"`
+	DefaultCommand string            `json:"defaultCommand"`
+	Net            string            `json:"net"`
+	Ports          map[string]string `json:"ports"`
 }
 
 func main() {
 	app := cli.NewApp()
 	app.Name = "drun"
 	app.Usage = "Docker Runner"
-	app.Version = "0.0.2"
+	app.Version = "0.0.3"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name:  "image",
+			Name:  "image, i",
 			Value: "",
 			Usage: "Docker Image to run",
 		},
 		cli.StringFlag{
-			Name:  "net",
+			Name:  "net, n",
 			Value: "",
 			Usage: "Network setting (see --net in docker run), defaults to host",
 		},
@@ -82,15 +83,34 @@ func main() {
 		if len(c.String("net")) > 0 {
 			net = c.String("net")
 		}
+
+		ports := map[string]string{
+			"all": "all",
+		}
+		if len(config.Ports) > 0 {
+			ports = config.Ports
+		}
+
 		cmdName := "docker"
 		cmdArgs := []string{
 			"run",
 			"--rm",
 			"-w", "/app",
 			"--net", net,
-			"-v", volume,
-			image}
+			"-v", volume}
 
+		// Defaults to exposing all ports
+		if ok := ports["all"]; len(ok) > 0 {
+			cmdArgs = append(cmdArgs, "-P")
+		} else {
+			// Add all the ports defined
+			for key, value := range ports {
+				cmdArgs = append(cmdArgs, "-p")
+				cmdArgs = append(cmdArgs, key+":"+value)
+			}
+		}
+
+		cmdArgs = append(cmdArgs, image)
 		cmdArgs = append(cmdArgs, command...)
 
 		cmd := exec.Command(cmdName, cmdArgs...)
