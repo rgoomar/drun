@@ -15,6 +15,7 @@ import (
 type DrunConfig struct {
 	Image          string `json:"image"`
 	DefaultCommand string `json:"defaultCommand"`
+	Net            string `json:"net"`
 }
 
 func main() {
@@ -27,6 +28,11 @@ func main() {
 			Name:  "image",
 			Value: "",
 			Usage: "Docker Image to run",
+		},
+		cli.StringFlag{
+			Name:  "net",
+			Value: "",
+			Usage: "Network setting (see --net in docker run), defaults to host",
 		},
 	}
 	app.Action = func(c *cli.Context) error {
@@ -67,11 +73,21 @@ func main() {
 		if len(c.String("image")) > 0 {
 			image = c.String("image")
 		}
+
+		net := "host"
+		if len(config.Net) > 0 {
+			net = config.Net
+		}
+		// Override config if specified in flag
+		if len(c.String("net")) > 0 {
+			net = c.String("net")
+		}
 		cmdName := "docker"
 		cmdArgs := []string{
 			"run",
 			"--rm",
 			"-w", "/app",
+			"--net", net,
 			"-v", volume,
 			image}
 

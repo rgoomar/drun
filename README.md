@@ -44,6 +44,8 @@ You can add a `drun.json` file in the root of your project or wherever you going
 
 `defaultCommand` - Default command to run
 
+`net` - Network Mode for docker run. Defaults to `host` for running local servers.
+
 *Example*
 ```json
 {
@@ -57,6 +59,8 @@ You can add a `drun.json` file in the root of your project or wherever you going
 ### Flags
 
 `--image` - Specify an image to run
+
+`--net` - Specify a network mode
 
 `[COMMANDS]` - Commands to execute in container
 
